@@ -1,9 +1,17 @@
 var mongoose = require('mongoose');
 UserData  = mongoose.model('UserInfo');
 var bcrypt  =require('bcryptjs');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 //user signup
 exports.userSignup = function(req, res){
+  var email = req.body.email;
+  req.checkBody('email', 'Email is not valid').isEmail();
+  var error = req.validationErrors();
+  if(error){
+    res.send(error);
+   }else{
   UserData.find({email: req.body.email},function(err, data){
     if(data != null && data != ''){
       res.send('User already exists');
@@ -24,21 +32,21 @@ exports.userSignup = function(req, res){
     }
   });
 };
-
+}
 //user login
 exports.userLogin = function(req,res){
   UserData.find({ phonenumber: req.body.phonenumber}, function(err, data){
     if(data != null && data != ''){
       bcrypt.compare(req.body.password, data[0].password, function(err, isMatch){
         if(isMatch == true){
-          res.status(200).send("User logged in");
+          res.status(200).send("User successfully logged in");
         }else{
           res.send("Password do not match");
         }
       });
     } else{
       res.send("User does not exist");
-    }
+    }                                         
   });
 };
 
@@ -51,3 +59,5 @@ exports.getAllUsers = function(req, res) {
     console.log(data);
   });
 };
+
+
