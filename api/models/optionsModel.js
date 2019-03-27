@@ -8,9 +8,7 @@ var OptionSchema = new Schema({
 
   is_valid: {
   	type: Boolean
-  },
-  
-  question_id : [{ type: Schema.Types.ObjectId, ref: 'Questions' }]
+  }
   });
 
 module.exports = mongoose.model('Options', OptionSchema);
