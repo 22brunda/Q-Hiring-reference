@@ -1,13 +1,14 @@
 var mongoose = require('mongoose');
 options  = mongoose.model('Options');
-questionsInfo = mongoose.model('Questions');
+questions = mongoose.model('Questions');
+const jwt = require('jsonwebtoken');
 
-exports.createOptions = function(req, res){
-	console.log('hii');
-	var optionInfo = new options(req.body);
-	optionInfo.save(function(err, data){
-            if(err)
-              res.send(err.message);
-            res.json(data);
-          })
+exports.createOptions = (req, res) => {
+  var optionInfo = new options(req.body);
+  optionInfo.save()
+  .then(data => {
+    res.json(data);
+  }).catch(err => {
+    res.status(400).send({message : err.message});
+  });
 };

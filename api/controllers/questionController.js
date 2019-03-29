@@ -1,13 +1,37 @@
 var mongoose = require('mongoose');
 questions  = mongoose.model('Questions');
 options  = mongoose.model('Options');
+const jwt = require('jsonwebtoken');
 
-exports.createQuestion = function(req, res){
-	var questionData = new questions(req.body);
-	questionData.options.push(req.body.opt1, req.body.opt2, req.body.opt3, req.body.opt4)
-	questionData.save(function(err, data){
-            if(err)
-              res.send(err.message);
-            res.json(data);
-          })
+exports.createQuestion = (req, res) => {
+  var questionData = new questions(req.body);
+  questionData.save()
+  .then(data => {
+    res.json(data);
+  }).catch(err => {
+    res.status(400).send({message: err.message});
+  });
 };
+
+exports.getAllwithOptions = (req, res, next) => {
+  questions.aggregate([{
+    $lookup: {
+      from: "options",
+      localField: "_id",
+      foreignField: 'questions',
+      as: "options"
+    }
+  }])
+  .then(result => {
+    res.status(200).json({
+      message: 'all questions and there options',
+      result: result
+    })
+  })
+  .catch(err => {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  })
+}
