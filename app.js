@@ -30,6 +30,7 @@ mongoose.connect('mongodb://localhost/Users');
 Users = require('./api/models/userModel');
 Questions = require('./api/models/questionsModel');
 Options = require('./api/models/optionsModel');
+UserQuestions = require('./api/models/usersQuestionsModel');
 
 //importing route
 var routes = require('./api/routes/routes');
