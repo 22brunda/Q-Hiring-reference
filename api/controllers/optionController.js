@@ -9,6 +9,6 @@ exports.createOptions = (req, res) => {
   .then(data => {
     res.json(data);
   }).catch(err => {
-    res.status(400).send({message : err.message});
+    res.status(400).send({message : 'No options found'});
   });
 };

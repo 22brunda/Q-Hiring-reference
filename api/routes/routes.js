@@ -29,6 +29,7 @@ module.exports = function(app) {
     app.route('/getAllwithOptions')
     .get(auth.loginRequired, questRoute.getAllwithOptions);
 
+    //Route for Question and Options for User
     app.route('/userQuestions')
     .post(auth.loginRequired, userQuestionsRoute.createUserQuestion);
 

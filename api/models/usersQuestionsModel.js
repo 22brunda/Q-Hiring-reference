@@ -7,7 +7,6 @@ var UserQuestionSchema = new Schema({
     ref: 'UserInfo',
     required: true
   },
-
   questionid: { 
     type: Schema.Types.ObjectId, 
     ref: 'Questions',

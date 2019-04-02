@@ -5,7 +5,6 @@ var OptionSchema = new Schema({
   name: {
     type: String
   },
-
   is_valid: {
     type: Boolean
   },
